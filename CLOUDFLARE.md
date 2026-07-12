@@ -4,14 +4,19 @@ This project deploys as a **Worker with Static Assets only** (no Worker script).
 
 ## `wrangler.jsonc`
 
+Static assets from `./dist`, plus a tiny Worker that only forces
+`Content-Type: application/xml` for `/sitemap.xml` (so Chrome shows the XML
+tree instead of stripping tags as HTML).
+
 ```jsonc
 {
   "name": "maison-calista",
   "compatibility_date": "2026-07-12",
+  "main": "./workers/assets-headers.js",
   "assets": {
     "directory": "./dist",
-    "html_handling": "force-trailing-slash",
-    "not_found_handling": "404-page"
+    "binding": "ASSETS",
+    "run_worker_first": ["/sitemap.xml"]
   }
 }
 ```

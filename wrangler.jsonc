@@ -2,9 +2,14 @@
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "maison-calista",
 	"compatibility_date": "2026-07-12",
+	"main": "./workers/assets-headers.js",
 	"assets": {
 		"directory": "./dist",
+		"binding": "ASSETS",
 		"html_handling": "force-trailing-slash",
-		"not_found_handling": "404-page"
+		"not_found_handling": "404-page",
+		// Run Worker only for sitemap so we can force application/xml.
+		// (If served as text/html, Chrome strips XML tags and shows plain URLs.)
+		"run_worker_first": ["/sitemap.xml"]
 	}
 }
