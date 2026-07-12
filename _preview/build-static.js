@@ -7,7 +7,7 @@
 const fs = require('fs');
 const path = require('path');
 const { ROOT, THEME, PAGES, buildPage, build404 } = require('./site-engine');
-const { SITE_URL, buildSitemapXml, buildRobotsTxt } = require('./sitemap');
+const { SITE_URL, buildSitemapXml, buildRobotsTxt, writeUtf8NoBom, assertValidSitemapXml } = require('./sitemap');
 
 const OUT = path.join(ROOT, 'dist');
 
@@ -97,6 +97,15 @@ function build() {
   fs.writeFileSync(
     path.join(OUT, '_headers'),
     [
+      '/sitemap.xml',
+      '  Content-Type: application/xml; charset=utf-8',
+      '  X-Content-Type-Options: nosniff',
+      '  Cache-Control: public, max-age=3600',
+      '',
+      '/robots.txt',
+      '  Content-Type: text/plain; charset=utf-8',
+      '  Cache-Control: public, max-age=3600',
+      '',
       '/*',
       '  X-Content-Type-Options: nosniff',
       '  Referrer-Policy: strict-origin-when-cross-origin',
@@ -104,22 +113,16 @@ function build() {
       '/assets/*',
       '  Cache-Control: public, max-age=31536000, immutable',
       '',
-      '/sitemap.xml',
-      '  Content-Type: application/xml; charset=utf-8',
-      '  Cache-Control: public, max-age=3600',
-      '',
-      '/robots.txt',
-      '  Content-Type: text/plain; charset=utf-8',
-      '  Cache-Control: public, max-age=3600',
-      '',
     ].join('\n'),
     'utf8'
   );
 
-  // SEO: sitemap + robots (all FR/EN URLs + hreflang)
+  // SEO: sitemap + robots (all FR/EN URLs + hreflang) — UTF-8 without BOM
   const lastmod = new Date().toISOString().slice(0, 10);
-  fs.writeFileSync(path.join(OUT, 'sitemap.xml'), buildSitemapXml(PAGES, lastmod), 'utf8');
-  fs.writeFileSync(path.join(OUT, 'robots.txt'), buildRobotsTxt(), 'utf8');
+  const sitemapXml = buildSitemapXml(PAGES, lastmod);
+  assertValidSitemapXml(sitemapXml);
+  writeUtf8NoBom(path.join(OUT, 'sitemap.xml'), sitemapXml);
+  writeUtf8NoBom(path.join(OUT, 'robots.txt'), buildRobotsTxt());
 
   // Workers Static Assets ignore file (safety net for maps / junk).
   fs.writeFileSync(path.join(OUT, '.assetsignore'), ['*.map', ''].join('\n'), 'utf8');

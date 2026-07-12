@@ -6,7 +6,8 @@
   "scripts": {
     "build": "node _preview/build-static.js",
     "preview": "node _preview/server.js",
-    "check": "npm run build && npx wrangler deploy --dry-run --outdir=.wrangler-dry-run",
+    "check:sitemap": "node _preview/validate-sitemap.js",
+    "check": "npm run build && npm run check:sitemap && npx wrangler deploy --dry-run --outdir=.wrangler-dry-run",
     "deploy": "npm run build && npx wrangler deploy"
   },
   "engines": {

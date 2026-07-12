@@ -9,7 +9,8 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const { URL } = require('url');
-const { THEME, buildPage, resolvePage } = require('./site-engine');
+const { THEME, buildPage, resolvePage, PAGES } = require('./site-engine');
+const { buildSitemapXml, buildRobotsTxt } = require('./sitemap');
 
 const PORT = Number(process.env.PORT) || 3000;
 const ASSETS = path.join(THEME, 'assets');
@@ -63,6 +64,26 @@ const server = http.createServer((req, res) => {
     if (pathname.startsWith('/theme/assets/')) {
       const rel = pathname.slice('/theme/assets/'.length);
       sendFile(res, path.normalize(path.join(ASSETS, rel)));
+      return;
+    }
+
+    if (pathname === '/sitemap.xml') {
+      const xml = buildSitemapXml(PAGES);
+      res.writeHead(200, {
+        'Content-Type': 'application/xml; charset=utf-8',
+        'X-Content-Type-Options': 'nosniff',
+        'Cache-Control': 'no-cache',
+      });
+      res.end(Buffer.from(xml, 'utf8'));
+      return;
+    }
+
+    if (pathname === '/robots.txt') {
+      res.writeHead(200, {
+        'Content-Type': 'text/plain; charset=utf-8',
+        'Cache-Control': 'no-cache',
+      });
+      res.end(buildRobotsTxt());
       return;
     }
 
