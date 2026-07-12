@@ -10,6 +10,24 @@ const THEME = path.join(ROOT, 'maison-calista-theme');
 const CONTENT = path.join(THEME, 'inc', 'content');
 const CONTACT_EMAIL = 'contact@associationcalista.com';
 const OG_IMAGE = `${SITE_URL}/assets/images/photos/maison-calista-restaurant-terrace-pool-dusk.jpg`;
+/** Google Analytics 4 measurement ID (single source — injected once per page). */
+const GA_MEASUREMENT_ID = 'G-K74F7V3CR1';
+
+/**
+ * Official Google tag (gtag.js) for GA4.
+ * Loaded once per HTML document; default config enables page_view + Enhanced Measurement.
+ */
+function googleAnalyticsHeadSnippet() {
+  const id = GA_MEASUREMENT_ID;
+  return `<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=${id}"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', '${id}');
+</script>`;
+}
 
 const PAGES = [
   { slug: '', file: 'home.html', title: { fr: 'Accueil', en: 'Home' }, nav: false },
@@ -285,6 +303,7 @@ function buildPage(page, lang, options = {}) {
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  ${googleAnalyticsHeadSnippet()}
   <title>${title}</title>
   <meta name="description" content="${description}" />
   <link rel="canonical" href="${canonical}" />
@@ -398,6 +417,7 @@ function build404(lang = 'fr') {
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  ${googleAnalyticsHeadSnippet()}
   <title>${lang === 'en' ? 'Page not found' : 'Page introuvable'} · Maison Calista</title>
   <link rel="stylesheet" href="/assets/css/main.css" />
   <link rel="icon" href="/assets/images/logo/maison-calista-logo.svg" type="image/svg+xml" />
@@ -420,6 +440,7 @@ module.exports = {
   CONTENT,
   PAGES,
   PRICES,
+  GA_MEASUREMENT_ID,
   buildPage,
   build404,
   resolvePage,

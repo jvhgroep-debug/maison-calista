@@ -9,7 +9,7 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const { URL } = require('url');
-const { THEME, buildPage, resolvePage, PAGES } = require('./site-engine');
+const { THEME, buildPage, build404, resolvePage, PAGES } = require('./site-engine');
 const { buildSitemapXml, buildRobotsTxt } = require('./sitemap');
 
 const PORT = Number(process.env.PORT) || 3000;
@@ -89,11 +89,9 @@ const server = http.createServer((req, res) => {
 
     const hit = resolvePage(pathname);
     if (!hit) {
+      const lang = pathname.startsWith('/en') ? 'en' : 'fr';
       res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
-      res.end(`<!DOCTYPE html><html lang="fr"><body style="font-family:system-ui;padding:3rem;background:#F7F2EA">
-        <h1>Page introuvable</h1>
-        <p><a href="/">Retour à l’accueil</a></p>
-      </body></html>`);
+      res.end(build404(lang));
       return;
     }
 
