@@ -1,0 +1,52 @@
+{
+  "$schema": "https://playground.wordpress.net/blueprint-schema.json",
+  "preferredVersions": {
+    "php": "8.2",
+    "wp": "latest"
+  },
+  "steps": [
+    {
+      "step": "login",
+      "username": "admin",
+      "password": "password"
+    },
+    {
+      "step": "activateTheme",
+      "themeFolderName": "maison-calista-theme"
+    },
+    {
+      "step": "installPlugin",
+      "pluginData": {
+        "resource": "vfs",
+        "path": "/plugin-zips/polylang.zip"
+      },
+      "options": {
+        "activate": true
+      }
+    },
+    {
+      "step": "installPlugin",
+      "pluginData": {
+        "resource": "vfs",
+        "path": "/plugin-zips/wordpress-seo.zip"
+      },
+      "options": {
+        "activate": true
+      }
+    },
+    {
+      "step": "installPlugin",
+      "pluginData": {
+        "resource": "vfs",
+        "path": "/plugin-zips/fluentform.zip"
+      },
+      "options": {
+        "activate": true
+      }
+    },
+    {
+      "step": "runPHP",
+      "code": "<?php\nrequire '/wordpress/wp-load.php';\nif ( ! function_exists( 'is_plugin_active' ) ) {\n  require_once ABSPATH . 'wp-admin/includes/plugin.php';\n}\n$errors = array();\n$ok = array();\n$stylesheet = get_option( 'stylesheet' );\nif ( 'maison-calista-theme' !== $stylesheet ) {\n  $errors[] = 'Theme not active, stylesheet=' . $stylesheet;\n} else {\n  $theme = wp_get_theme();\n  $ok[] = 'Theme active: ' . $theme->get( 'Name' ) . ' v' . $theme->get( 'Version' );\n  if ( is_wp_error( $theme->errors() ) && $theme->errors()->has_errors() ) {\n    $errors[] = 'Theme errors: ' . $theme->errors()->get_error_message();\n  } else {\n    $ok[] = 'No theme errors object';\n  }\n}\nif ( get_option( 'maison_calista_demo_installed' ) ) {\n  $ok[] = 'Auto-setup flag set';\n} else {\n  if ( function_exists( 'maison_calista_install_demo_content' ) ) {\n    try {\n      maison_calista_install_demo_content();\n      $ok[] = 'Manual install_demo_content completed';\n    } catch ( Throwable $e ) {\n      $errors[] = 'install_demo_content fatal: ' . $e->getMessage();\n    }\n  } else {\n    $errors[] = 'maison_calista_install_demo_content missing (theme functions not loaded?)';\n  }\n}\n$home = (int) get_option( 'page_on_front' );\nif ( $home > 0 ) {\n  $ok[] = 'Front page ID ' . $home;\n} else {\n  $errors[] = 'Front page not set';\n}\n$required = array( 'home', 'about-maison-calista', 'the-residence', 'care-support', 'family', 'activities', 'restaurant', 'stays-pricing', 'gallery', 'contact', 'privacy-policy', 'cookie-policy' );\n$missing = array();\nforeach ( $required as $slug ) {\n  if ( ! get_page_by_path( $slug ) ) {\n    $missing[] = $slug;\n  }\n}\nif ( $missing ) {\n  $errors[] = 'Missing pages: ' . implode( ',', $missing );\n} else {\n  $ok[] = 'All 12 pages created';\n}\n$locations = get_theme_mod( 'nav_menu_locations', array() );\nif ( empty( $locations['primary'] ) ) {\n  $errors[] = 'Primary menu not assigned';\n} else {\n  $ok[] = 'Primary menu assigned';\n}\n$theme_obj = wp_get_theme();\nif ( ! $theme_obj->is_block_theme() ) {\n  $errors[] = 'Not detected as block/Gutenberg FSE theme';\n} else {\n  $ok[] = 'Gutenberg FSE block theme detected';\n}\nif ( ! file_exists( get_template_directory() . '/theme.json' ) ) {\n  $errors[] = 'theme.json missing';\n} else {\n  $ok[] = 'theme.json present (FSE)';\n}\nif ( ! file_exists( get_template_directory() . '/templates/index.html' ) ) {\n  $errors[] = 'templates/index.html missing';\n} else {\n  $ok[] = 'Site Editor template index.html present';\n}\n$patterns = glob( get_template_directory() . '/patterns/*.php' );\n$count = is_array( $patterns ) ? count( $patterns ) : 0;\nif ( $count < 17 ) {\n  $errors[] = 'Expected 17 patterns, got ' . $count;\n} else {\n  $ok[] = 'Patterns on disk: ' . $count;\n}\n$plugin_needles = array( 'polylang', 'wordpress-seo', 'fluentform' );\n$active = (array) get_option( 'active_plugins', array() );\nforeach ( $plugin_needles as $needle ) {\n  $found = false;\n  foreach ( $active as $a ) {\n    if ( false !== strpos( $a, $needle ) ) {\n      $found = true;\n      $ok[] = 'Plugin active: ' . $a;\n      break;\n    }\n  }\n  if ( ! $found ) {\n    $errors[] = 'Plugin not active: ' . $needle;\n  }\n}\ntry {\n  $out = do_shortcode( '[mc_site_logo][mc_language_switcher][mc_whatsapp][mc_maps][mc_price key=\"wellbeing\"]' );\n  if ( false !== strpos( $out, 'To be confirmed' ) || false !== strpos( $out, 'mc-site-logo' ) || false !== strpos( $out, 'mc-lang' ) || false !== strpos( $out, '€' ) ) {\n    $ok[] = 'Shortcodes render without fatal';\n  } else {\n    $errors[] = 'Unexpected shortcode output';\n  }\n} catch ( Throwable $e ) {\n  $errors[] = 'Shortcode fatal: ' . $e->getMessage();\n}\n$ok[] = 'PHP ' . PHP_VERSION;\n$ok[] = 'WP ' . get_bloginfo( 'version' );\n$report = array();\n$report[] = '=== Maison Calista activation test (STRATO-like: PHP 8.2 / WP latest) ===';\nforeach ( $ok as $line ) {\n  $report[] = 'PASS: ' . $line;\n}\nforeach ( $errors as $line ) {\n  $report[] = 'ERROR: ' . $line;\n}\n$report[] = 'RESULT=' . ( $errors ? 'FAIL' : 'PASS' );\n$text = implode( \"\\n\", $report ) . \"\\n\";\n@mkdir( '/output', 0777, true );\nfile_put_contents( '/output/activation-result.txt', $text );\necho $text;\n"
+    }
+  ]
+}

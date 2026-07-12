@@ -1,0 +1,36 @@
+<!-- wp:group {"tagName":"header","className":"mc-header","layout":{"type":"constrained","contentSize":"1200px"}} -->
+<header class="wp-block-group mc-header">
+	<!-- wp:html -->
+	<div class="mc-header__inner">
+		<a class="mc-header__brand" href="%%HOME_URL%%">
+			<!-- /wp:html -->
+			<!-- wp:shortcode -->
+			[mc_site_logo]
+			<!-- /wp:shortcode -->
+			<!-- wp:html -->
+			<span class="mc-header__brand-text screen-reader-text">Maison Calista</span>
+		</a>
+		<button class="mc-nav-toggle" type="button" aria-expanded="false" aria-controls="mc-primary-nav" aria-label="Ouvrir le menu">
+			<span></span><span></span><span></span>
+		</button>
+		<nav class="mc-header__nav" id="mc-primary-nav" aria-label="Navigation principale">
+	<!-- /wp:html -->
+
+	<!-- wp:navigation {"overlayMenu":"never","__unstableLocation":"primary","layout":{"type":"flex","justifyContent":"center"},"ariaLabel":"Principal","fontSize":"small"} /-->
+
+	<!-- wp:html -->
+		</nav>
+		<div class="mc-header__actions">
+	<!-- /wp:html -->
+
+	<!-- wp:shortcode -->
+	[mc_language_switcher]
+	<!-- /wp:shortcode -->
+
+	<!-- wp:html -->
+			<a class="mc-btn-cta" href="%%HOME_URL%%contact/">Liste d’attente</a>
+		</div>
+	</div>
+	<!-- /wp:html -->
+</header>
+<!-- /wp:group -->

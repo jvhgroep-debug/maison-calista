@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Private Room">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#EFE6D8"/>
+      <stop offset="50%" stop-color="#F7F2EA"/>
+      <stop offset="100%" stop-color="#E8DDD0"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <path d="M200 480 V260 Q200 140 360 140 Q520 140 520 260 V480" fill="#D9C8B0" opacity="0.25" stroke="#A67C52" stroke-width="1" opacity="0.3"/>
+  <rect x="560" y="320" width="140" height="160" rx="4" fill="#E8DDD0" opacity="0.6"/>
+  <path d="M560 320 Q630 240 700 320" fill="none" stroke="#6B4F3A" stroke-width="0.75" opacity="0.25"/>
+  <text x="400" y="340" text-anchor="middle" font-family="Georgia, serif" font-size="28" fill="#6B4F3A" opacity="0.7" letter-spacing="0.06em">Private Room</text>
+  <text x="400" y="375" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#8A847A" letter-spacing="0.12em">PLACEHOLDER  REPLACE WITH BROCHURE PHOTO</text>
+</svg>

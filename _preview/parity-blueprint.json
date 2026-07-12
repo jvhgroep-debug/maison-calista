@@ -1,0 +1,22 @@
+{
+  "$schema": "https://playground.wordpress.net/blueprint-schema.json",
+  "preferredVersions": {
+    "php": "8.2",
+    "wp": "latest"
+  },
+  "steps": [
+    {
+      "step": "login",
+      "username": "admin",
+      "password": "password"
+    },
+    {
+      "step": "activateTheme",
+      "themeFolderName": "maison-calista-theme"
+    },
+    {
+      "step": "runPHP",
+      "code": "<?php\n@mkdir('/output', 0777, true);\nregister_shutdown_function(function () {\n  $e = error_get_last();\n  if ($e && in_array($e['type'], array(E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR), true)) {\n    file_put_contents('/output/activation-result.txt', \"FATAL\\n\" . print_r($e, true));\n  }\n});\nrequire '/wordpress/wp-load.php';\n$errors = array();\n$ok = array();\ntry {\n  if (function_exists('maison_calista_run_setup_safe')) {\n    maison_calista_run_setup_safe(true);\n  }\n  if (function_exists('maison_calista_demo_is_complete') && maison_calista_demo_is_complete()) {\n    $ok[] = 'Demo complete';\n  } else {\n    $errors[] = 'Demo incomplete';\n  }\n  $h = function_exists('maison_calista_theme_header') ? maison_calista_theme_header() : '';\n  if (strpos($h, 'mc-header') !== false && strpos($h, 'wp-block-navigation__container') !== false && strpos($h, 'mc-btn-cta') !== false) {\n    $ok[] = 'Header chrome OK';\n  } else {\n    $errors[] = 'Header chrome bad len=' . strlen($h);\n  }\n  $f = function_exists('maison_calista_theme_footer') ? maison_calista_theme_footer() : '';\n  if (strpos($f, 'mc-footer__grid') !== false) {\n    $ok[] = 'Footer chrome OK';\n  } else {\n    $errors[] = 'Footer chrome bad';\n  }\n  $home = get_page_by_path('home');\n  if ($home && strpos((string) $home->post_content, 'mc-hero') !== false && strpos((string) $home->post_content, 'mc-usp-grid') !== false) {\n    $ok[] = 'Home content has hero + USP';\n  } else {\n    $errors[] = 'Home content incomplete';\n  }\n  $raw = (string) @file_get_contents(get_template_directory() . '/templates/front-page.html');\n  if (strpos($raw, 'mc-main') !== false && strpos($raw, '\"type\":\"default\"') !== false) {\n    $ok[] = 'front-page full-width';\n  } else {\n    $errors[] = 'front-page template wrong';\n  }\n  $parts = (string) @file_get_contents(get_template_directory() . '/parts/header.html');\n  if (strpos($parts, 'mc_theme_header') !== false) {\n    $ok[] = 'Header part uses mc_theme_header';\n  } else {\n    $errors[] = 'Header part wrong';\n  }\n  $tj = json_decode((string) file_get_contents(get_template_directory() . '/theme.json'), true);\n  if (($tj['settings']['layout']['contentSize'] ?? '') === '1200px' && ($tj['styles']['spacing']['padding']['left'] ?? '') === '0') {\n    $ok[] = 'theme.json layout OK';\n  } else {\n    $errors[] = 'theme.json layout bad';\n  }\n  $css = (string) file_get_contents(get_template_directory() . '/assets/css/main.css');\n  if (strpos($css, 'WordPress FSE / preview parity') !== false) {\n    $ok[] = 'Parity CSS present';\n  } else {\n    $errors[] = 'Parity CSS missing';\n  }\n  $ok[] = 'Patterns ' . count(glob(get_template_directory() . '/patterns/*.php') ?: array());\n  $ok[] = 'v' . wp_get_theme()->get('Version');\n  $ok[] = 'WP ' . get_bloginfo('version');\n} catch (Throwable $e) {\n  $errors[] = 'EX: ' . $e->getMessage() . ' @ ' . $e->getFile() . ':' . $e->getLine();\n}\n$report = array('=== 1.3.4 preview parity ===');\nforeach ($ok as $l) { $report[] = 'PASS: ' . $l; }\nforeach ($errors as $l) { $report[] = 'ERROR: ' . $l; }\n$report[] = 'RESULT=' . ($errors ? 'FAIL' : 'PASS');\n$text = implode(\"\\n\", $report) . \"\\n\";\nfile_put_contents('/output/activation-result.txt', $text);\necho $text;\n"
+    }
+  ]
+}

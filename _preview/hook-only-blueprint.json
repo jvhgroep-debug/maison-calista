@@ -1,0 +1,22 @@
+{
+  "$schema": "https://playground.wordpress.net/blueprint-schema.json",
+  "preferredVersions": {
+    "php": "8.2",
+    "wp": "latest"
+  },
+  "steps": [
+    {
+      "step": "login",
+      "username": "admin",
+      "password": "password"
+    },
+    {
+      "step": "activateTheme",
+      "themeFolderName": "maison-calista-theme"
+    },
+    {
+      "step": "runPHP",
+      "code": "<?php\nrequire '/wordpress/wp-load.php';\n$report = array();\n$report[] = 'stylesheet=' . get_option('stylesheet');\n$report[] = 'demo_flag=' . (get_option('maison_calista_demo_installed') ? '1' : '0');\n$report[] = 'front=' . get_option('page_on_front');\n$report[] = 'show_on_front=' . get_option('show_on_front');\n$pages = get_posts(array('post_type'=>'page','numberposts'=>-1,'post_status'=>'any'));\n$report[] = 'page_count=' . count($pages);\nforeach ($pages as $p) { $report[] = 'page:' . $p->post_name . '|' . $p->post_title; }\n$report[] = 'fn_exists=' . (function_exists('maison_calista_install_demo_content') ? '1' : '0');\n$report[] = 'setup_error=' . (string) get_transient('maison_calista_setup_error');\n$report[] = 'theme_switched=' . var_export(get_option('theme_switched'), true);\n$locations = get_theme_mod('nav_menu_locations', array());\n$report[] = 'menu_primary=' . (isset($locations['primary']) ? $locations['primary'] : '0');\n@mkdir('/output', 0777, true);\nfile_put_contents('/output/activation-result.txt', implode(\"\\n\", $report));\necho implode(\"\\n\", $report);\n"
+    }
+  ]
+}

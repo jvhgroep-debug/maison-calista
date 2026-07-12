@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" role="img" aria-label="Maison Calista Hero">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F7F2EA"/>
+      <stop offset="40%" stop-color="#EFE6D8"/>
+      <stop offset="100%" stop-color="#D9C8B0"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#A67C52"/>
+      <stop offset="100%" stop-color="#6B4F3A"/>
+    </linearGradient>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <path d="M0 780 L480 620 L960 700 L1440 560 L1920 640 L1920 1080 L0 1080 Z" fill="#A67C52" opacity="0.1"/>
+  <path d="M760 900 V520 Q760 320 960 320 Q1160 320 1160 520 V900" fill="#E8DDD0" fill-opacity="0.4" stroke="url(#gold)" stroke-width="2" stroke-opacity="0.4"/>
+  <path d="M420 900 V560 Q420 400 560 400 Q700 400 700 560 V900" fill="none" stroke="#6B4F3A" stroke-width="1.5" stroke-opacity="0.2"/>
+  <path d="M1220 900 V560 Q1220 400 1360 400 Q1500 400 1500 560 V900" fill="none" stroke="#6B4F3A" stroke-width="1.5" stroke-opacity="0.2"/>
+  <text x="960" y="480" text-anchor="middle" font-family="Georgia, serif" font-size="72" fill="#6B4F3A" opacity="0.75" letter-spacing="0.12em">Maison Calista</text>
+  <text x="960" y="560" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" fill="#8A847A" letter-spacing="0.2em">NEAR MARRAKECH · MOROCCO</text>
+  <text x="960" y="620" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#8A847A" letter-spacing="0.15em">HERO PLACEHOLDER  REPLACE WITH BROCHURE PHOTO</text>
+</svg>

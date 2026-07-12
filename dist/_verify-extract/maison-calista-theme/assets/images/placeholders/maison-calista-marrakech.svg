@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Marrakech">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#EFE6D8"/>
+      <stop offset="50%" stop-color="#F7F2EA"/>
+      <stop offset="100%" stop-color="#D9C8B0"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <path d="M120 500 V280 Q120 160 240 160 H360 Q480 160 480 280 V500" fill="#E8DDD0" opacity="0.45" stroke="#A67C52" stroke-width="1" stroke-opacity="0.35"/>
+  <path d="M440 500 V300 Q440 200 560 200 Q680 200 680 300 V500" fill="none" stroke="#6B4F3A" stroke-width="1" stroke-opacity="0.25"/>
+  <path d="M0 520 L800 520" stroke="#A67C52" stroke-width="0.5" opacity="0.3"/>
+  <text x="400" y="120" text-anchor="middle" font-family="Georgia, serif" font-size="28" fill="#6B4F3A" opacity="0.7" letter-spacing="0.1em">Marrakech</text>
+  <text x="400" y="155" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#8A847A" letter-spacing="0.12em">PLACEHOLDER  REPLACE WITH BROCHURE PHOTO</text>
+</svg>

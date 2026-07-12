@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" role="img" aria-label="Dining">
+  <ellipse cx="24" cy="30" rx="14" ry="6" stroke="#A67C52" stroke-width="1.75"/>
+  <path d="M24 24V12M18 14h12" stroke="#6B4F3A" stroke-width="1.75" stroke-linecap="round"/>
+  <path d="M14 36h20" stroke="#A67C52" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+  <circle cx="24" cy="10" r="2" fill="#A67C52" opacity="0.6"/>
+</svg>

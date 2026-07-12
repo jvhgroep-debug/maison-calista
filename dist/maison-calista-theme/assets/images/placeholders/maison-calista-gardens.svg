@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Gardens">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#F7F2EA"/>
+      <stop offset="100%" stop-color="#EFE6D8"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <circle cx="180" cy="420" r="80" fill="#D9C8B0" opacity="0.35"/>
+  <circle cx="620" cy="400" r="100" fill="#E8DDD0" opacity="0.5"/>
+  <path d="M240 500 Q400 380 560 500" fill="none" stroke="#A67C52" stroke-width="1.5" opacity="0.3"/>
+  <path d="M320 160 V360 Q320 260 400 260 Q480 260 480 360 V500" fill="#D9C8B0" opacity="0.2" stroke="#6B4F3A" stroke-width="0.75" opacity="0.25"/>
+  <text x="400" y="200" text-anchor="middle" font-family="Georgia, serif" font-size="28" fill="#6B4F3A" opacity="0.7" letter-spacing="0.08em">Gardens</text>
+  <text x="400" y="235" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#8A847A" letter-spacing="0.12em">PLACEHOLDER  REPLACE WITH BROCHURE PHOTO</text>
+</svg>

@@ -1,0 +1,47 @@
+{
+	"$schema": "https://schemas.wp.org/wp/6.7/theme.json",
+	"version": 3,
+	"title": "Cream",
+	"settings": {
+		"color": {
+			"palette": [
+				{ "slug": "cream", "color": "#FAF6F0", "name": "Cream" },
+				{ "slug": "cream-deep", "color": "#F3EBE0", "name": "Deep Cream" },
+				{ "slug": "sand", "color": "#E2D4C0", "name": "Sand" },
+				{ "slug": "sand-soft", "color": "#EDE4D8", "name": "Soft Sand" },
+				{ "slug": "gold", "color": "#A67C52", "name": "Gold" },
+				{ "slug": "gold-deep", "color": "#8B6540", "name": "Deep Gold" },
+				{ "slug": "bronze", "color": "#6B4F3A", "name": "Bronze" },
+				{ "slug": "charcoal", "color": "#2C2A28", "name": "Charcoal" },
+				{ "slug": "stone", "color": "#5C574F", "name": "Stone" },
+				{ "slug": "muted", "color": "#8A847A", "name": "Muted" },
+				{ "slug": "white", "color": "#FFFFFF", "name": "White" },
+				{ "slug": "ink", "color": "#1A1816", "name": "Ink" }
+			]
+		}
+	},
+	"styles": {
+		"color": {
+			"background": "var(--wp--preset--color--cream)",
+			"text": "var(--wp--preset--color--charcoal)"
+		},
+		"elements": {
+			"button": {
+				"color": {
+					"background": "var(--wp--preset--color--gold-deep)",
+					"text": "var(--wp--preset--color--white)"
+				},
+				":hover": {
+					"color": {
+						"background": "var(--wp--preset--color--bronze)"
+					}
+				}
+			}
+		},
+		"blocks": {
+			"core/separator": {
+				"color": { "text": "var(--wp--preset--color--sand-soft)" }
+			}
+		}
+	}
+}

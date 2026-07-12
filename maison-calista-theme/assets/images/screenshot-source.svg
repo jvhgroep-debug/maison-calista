@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-label="Maison Calista theme preview">
+  <defs>
+    <linearGradient id="cream" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F7F2EA"/>
+      <stop offset="100%" stop-color="#EFE6D8"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#A67C52"/>
+      <stop offset="100%" stop-color="#6B4F3A"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="900" fill="url(#cream)"/>
+  <!-- Header -->
+  <rect x="0" y="0" width="1200" height="72" fill="#FFFFFF" opacity="0.85"/>
+  <path d="M48 48 V32 Q48 22 58 22 Q68 22 68 32 V48" fill="none" stroke="url(#gold)" stroke-width="1.5"/>
+  <text x="88" y="38" font-family="Georgia, serif" font-size="22" fill="#6B4F3A">Maison Calista</text>
+  <rect x="420" y="30" width="60" height="4" rx="2" fill="#D9C8B0" opacity="0.6"/>
+  <rect x="500" y="30" width="80" height="4" rx="2" fill="#D9C8B0" opacity="0.6"/>
+  <rect x="600" y="30" width="70" height="4" rx="2" fill="#D9C8B0" opacity="0.6"/>
+  <rect x="980" y="24" width="140" height="28" rx="4" fill="#A67C52"/>
+  <!-- Hero -->
+  <rect x="0" y="72" width="1200" height="380" fill="#E8DDD0"/>
+  <path d="M480 420 V240 Q480 160 600 160 Q720 160 720 240 V420" fill="#D9C8B0" fill-opacity="0.4" stroke="#A67C52" stroke-width="1.5" stroke-opacity="0.4"/>
+  <text x="600" y="280" text-anchor="middle" font-family="Georgia, serif" font-size="48" fill="#6B4F3A" opacity="0.8">Exclusive Residence</text>
+  <text x="600" y="330" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#8A847A" letter-spacing="0.15em">NEAR MARRAKECH</text>
+  <!-- Cards -->
+  <rect x="80" y="500" width="320" height="200" rx="8" fill="#FFFFFF" opacity="0.7"/>
+  <rect x="80" y="500" width="320" height="120" rx="8" fill="#D9C8B0" opacity="0.35"/>
+  <rect x="440" y="500" width="320" height="200" rx="8" fill="#FFFFFF" opacity="0.7"/>
+  <rect x="440" y="500" width="320" height="120" rx="8" fill="#D9C8B0" opacity="0.35"/>
+  <rect x="800" y="500" width="320" height="200" rx="8" fill="#FFFFFF" opacity="0.7"/>
+  <rect x="800" y="500" width="320" height="120" rx="8" fill="#D9C8B0" opacity="0.35"/>
+  <!-- Footer -->
+  <rect x="0" y="780" width="1200" height="120" fill="#2C2A28" opacity="0.08"/>
+  <text x="600" y="850" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#5C574F">Maison Calista WordPress Theme · 1200×900 screenshot source</text>
+</svg>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" role="img" aria-label="Pool">
+  <path d="M8 32c4-3 8-3 12 0s8 3 12 0 8-3 12 0" stroke="#A67C52" stroke-width="1.75" stroke-linecap="round"/>
+  <path d="M8 38c4-3 8-3 12 0s8 3 12 0 8-3 12 0" stroke="#6B4F3A" stroke-width="1.75" stroke-linecap="round" opacity="0.6"/>
+  <rect x="10" y="18" width="28" height="14" rx="3" stroke="#A67C52" stroke-width="1.75"/>
+  <path d="M24 10v8" stroke="#6B4F3A" stroke-width="1.5" stroke-linecap="round"/>
+  <circle cx="24" cy="8" r="2" fill="#A67C52"/>
+</svg>

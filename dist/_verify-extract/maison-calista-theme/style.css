@@ -1,0 +1,19 @@
+/*
+Theme Name: Maison Calista
+Theme URI: https://www.maisoncalista.com
+Author: Maison Calista
+Author URI: https://www.maisoncalista.com
+Description: Custom Gutenberg block theme for Maison Calista ù an exclusive boutique residence near Marrakech, Morocco. Warm, elegant, and fully editable in the WordPress Site Editor.
+Requires at least: 6.4
+Tested up to: 6.7
+Requires PHP: 8.0
+Version: 1.3.0
+License: GNU General Public License v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: maison-calista
+Tags: full-site-editing, block-patterns, block-styles, custom-colors, custom-logo, custom-menu, editor-style, featured-images, rtl-language-support, sticky-post, theme-options, threaded-comments, translation-ready, wide-blocks
+
+Maison Calista ù boutique residence WordPress theme.
+*/
+
+/* Front-end styles load from assets/css/main.css via functions.php. */
