@@ -1,26 +1,23 @@
-# Cloudflare Pages — Maison Calista
+# Cloudflare Pages — Maison Calista (static site)
 
-This repository deploys a **static** version of the Maison Calista website
-(same content/look as the local Node preview). The WordPress theme in
-`maison-calista-theme/` is for STRATO hosting and is **not** executed on Cloudflare Pages.
+Production output is the **`dist/`** folder built by `npm run build`.
 
-## Detected settings (use these in the Cloudflare dashboard)
+## Cloudflare dashboard settings
 
 | Setting | Value |
 |--------|--------|
 | **Git repository** | `jvhgroep-debug/maison-calista` |
 | **Production branch** | `main` |
-| **Root directory** | `/` (repository root — leave blank) |
-| **Framework preset** | None / Direct Upload equivalent — **None** |
+| **Root directory** | *(empty)* |
+| **Framework preset** | None |
 | **Build command** | `npm run build` |
-| **Build output directory** | `site` |
-| **Node.js version** | `20` (or 18+) |
+| **Build output directory** | `dist` |
+| **Node.js version** | `20` (`NODE_VERSION=20`) |
 
-## Optional Wrangler CLI deploy
+## Local
 
 ```bash
-npm run build
-npx wrangler pages deploy site --project-name=maison-calista
+npm run build      # writes /dist
+npm run preview    # http://localhost:3000
+npm run deploy     # wrangler pages deploy dist
 ```
-
-Or: `npm run deploy` (requires `wrangler login` once).

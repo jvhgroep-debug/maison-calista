@@ -1,8 +1,8 @@
 /**
  * Maison Calista — local static preview server (no WordPress required).
- * Serves theme assets + assembled FR/EN pages with nav, styles, images.
+ * Same asset paths as production /dist (`/assets/...`).
  *
- * Usage: node _preview/server.js
+ * Usage: npm run preview
  * URL:   http://localhost:3000
  */
 const http = require('http');
@@ -12,6 +12,7 @@ const { URL } = require('url');
 const { THEME, buildPage, resolvePage } = require('./site-engine');
 
 const PORT = Number(process.env.PORT) || 3000;
+const ASSETS = path.join(THEME, 'assets');
 
 const MIME = {
   '.html': 'text/html; charset=utf-8',
@@ -47,10 +48,10 @@ const server = http.createServer((req, res) => {
     const u = new URL(req.url, `http://localhost:${PORT}`);
     let pathname = decodeURIComponent(u.pathname);
 
-    if (pathname.startsWith('/theme/')) {
-      const rel = pathname.slice('/theme/'.length);
-      const filePath = path.normalize(path.join(THEME, rel));
-      if (!filePath.startsWith(THEME)) {
+    if (pathname.startsWith('/assets/')) {
+      const rel = pathname.slice('/assets/'.length);
+      const filePath = path.normalize(path.join(ASSETS, rel));
+      if (!filePath.startsWith(ASSETS)) {
         res.writeHead(403).end('Forbidden');
         return;
       }
@@ -58,8 +59,10 @@ const server = http.createServer((req, res) => {
       return;
     }
 
-    if (pathname.startsWith('/assets/')) {
-      sendFile(res, path.join(THEME, pathname.slice(1)));
+    // Legacy /theme/assets alias → /assets
+    if (pathname.startsWith('/theme/assets/')) {
+      const rel = pathname.slice('/theme/assets/'.length);
+      sendFile(res, path.normalize(path.join(ASSETS, rel)));
       return;
     }
 
@@ -88,7 +91,7 @@ server.listen(PORT, '127.0.0.1', () => {
   console.log('----------------------------');
   console.log(`URL:  http://localhost:${PORT}`);
   console.log(`EN:   http://localhost:${PORT}/en/`);
-  console.log(`Theme assets: ${THEME}`);
+  console.log(`Assets: ${ASSETS}`);
   console.log('Press Ctrl+C to stop.');
   console.log('');
 });

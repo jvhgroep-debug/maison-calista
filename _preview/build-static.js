@@ -1,18 +1,18 @@
 /**
- * Static export for Cloudflare Pages.
- * Output: /site (HTML pages + /theme assets)
+ * Static export for Cloudflare Pages / production deploy.
+ * Output: /dist (index.html, all pages, assets, CSS, JS)
  *
- * Usage: node _preview/build-static.js
+ * Usage: npm run build
  */
 const fs = require('fs');
 const path = require('path');
 const { ROOT, THEME, PAGES, buildPage, build404 } = require('./site-engine');
 
-const OUT = path.join(ROOT, 'site');
+const OUT = path.join(ROOT, 'dist');
 
 const SKIP_ASSET_DIRS = new Set([
   'source-whatsapp',
-  'gallery', // nested thumbs under photos/gallery
+  'gallery',
   'scripts',
   'node_modules',
 ]);
@@ -53,7 +53,7 @@ function writePage(relDir, html) {
 }
 
 function build() {
-  console.log('Building Maison Calista static site for Cloudflare Pages…');
+  console.log('Building Maison Calista static website → /dist');
   rimraf(OUT);
   ensureDir(OUT);
 
@@ -64,20 +64,16 @@ function build() {
 
   fs.writeFileSync(path.join(OUT, '404.html'), build404('fr'), 'utf8');
 
-  // Theme public assets under /theme/...
+  // Public assets at /assets/...
   copyTree(
     path.join(THEME, 'assets'),
-    path.join(OUT, 'theme', 'assets'),
+    path.join(OUT, 'assets'),
     path.join(THEME, 'assets')
   );
 
-  // Cloudflare Pages helpers
   fs.writeFileSync(
     path.join(OUT, '_redirects'),
-    [
-      '# Pretty URLs already use trailing-slash directories',
-      '/en  /en/  301',
-    ].join('\n') + '\n',
+    ['/en  /en/  301', ''].join('\n'),
     'utf8'
   );
 
@@ -88,13 +84,13 @@ function build() {
       '  X-Content-Type-Options: nosniff',
       '  Referrer-Policy: strict-origin-when-cross-origin',
       '',
-      '/theme/assets/*',
+      '/assets/*',
       '  Cache-Control: public, max-age=31536000, immutable',
-    ].join('\n') + '\n',
+      '',
+    ].join('\n'),
     'utf8'
   );
 
-  // Count outputs
   let htmlCount = 0;
   function countHtml(dir) {
     for (const name of fs.readdirSync(dir)) {
@@ -104,6 +100,22 @@ function build() {
     }
   }
   countHtml(OUT);
+
+  const required = [
+    'index.html',
+    'en/index.html',
+    'about-maison-calista/index.html',
+    'assets/css/main.css',
+    'assets/js/main.js',
+    'assets/js/navigation.js',
+    'assets/images/logo/maison-calista-logo.svg',
+  ];
+  for (const rel of required) {
+    if (!fs.existsSync(path.join(OUT, rel))) {
+      console.error('Missing required file:', rel);
+      process.exit(1);
+    }
+  }
 
   console.log('Output:', OUT);
   console.log('HTML files:', htmlCount);

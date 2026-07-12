@@ -46,7 +46,6 @@ function readContent(file, lang) {
 
 function expandShortcodes(html, lang, pagePath) {
   const home = lang === 'en' ? '/en/' : '/';
-  const themeUri = '/theme';
   const year = String(new Date().getFullYear());
   const loc = lang === 'en' ? 'Near Marrakech, Morocco' : 'Près de Marrakech, Maroc';
   const selfPath = pagePath || home;
@@ -55,11 +54,13 @@ function expandShortcodes(html, lang, pagePath) {
     : '/en' + (selfPath === '/' ? '/' : selfPath);
 
   let out = html
-    .replace(/%%THEME_URI%%/g, themeUri)
+    // Content files use %%THEME_URI%%/assets/... → /assets/...
+    .replace(/%%THEME_URI%%\/assets/g, '/assets')
+    .replace(/%%THEME_URI%%/g, '')
     .replace(/%%HOME_URL%%/g, home);
 
   out = out.replace(/\[mc_site_logo[^\]]*\]/g,
-    `<img class="mc-site-logo" src="${themeUri}/assets/images/logo/maison-calista-logo.svg" alt="Maison Calista" width="160" height="48" loading="eager" decoding="async" />`);
+    `<img class="mc-site-logo" src="/assets/images/logo/maison-calista-logo.svg" alt="Maison Calista" width="160" height="48" loading="eager" decoding="async" />`);
 
   out = out.replace(/\[mc_language_switcher\]/g, `
 <nav class="mc-lang" aria-label="Langue">
@@ -262,10 +263,10 @@ function buildPage(page, lang, options = {}) {
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>${title}</title>
   <meta name="description" content="Maison Calista — résidence boutique exclusive près de Marrakech." />
-  <link rel="preload" href="/theme/assets/fonts/source-sans-3-latin.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="preload" href="/theme/assets/fonts/cormorant-garamond-latin.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="stylesheet" href="/theme/assets/css/main.css" />
-  <link rel="icon" href="/theme/assets/images/logo/maison-calista-logo.svg" type="image/svg+xml" />
+  <link rel="preload" href="/assets/fonts/source-sans-3-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/assets/fonts/cormorant-garamond-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <link rel="icon" href="/assets/images/logo/maison-calista-logo.svg" type="image/svg+xml" />
   <style>
     :root {
       --wp--preset--color--cream: #F7F2EA;
@@ -320,9 +321,9 @@ function buildPage(page, lang, options = {}) {
   </main>
   ${footer}
   ${badge}
-  <script src="/theme/assets/js/navigation.js" defer></script>
-  <script src="/theme/assets/js/main.js" defer></script>
-  ${page.slug === 'gallery' ? '<script src="/theme/assets/js/gallery.js" defer></script>' : ''}
+  <script src="/assets/js/navigation.js" defer></script>
+  <script src="/assets/js/main.js" defer></script>
+  ${page.slug === 'gallery' ? '<script src="/assets/js/gallery.js" defer></script>' : ''}
   <script>
     window.maisonCalista = window.maisonCalista || { i18n: {
       menuOpen: ${lang === 'en' ? "'Open menu'" : "'Ouvrir le menu'"},
@@ -357,8 +358,8 @@ function build404(lang = 'fr') {
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>${lang === 'en' ? 'Page not found' : 'Page introuvable'} · Maison Calista</title>
-  <link rel="stylesheet" href="/theme/assets/css/main.css" />
-  <link rel="icon" href="/theme/assets/images/logo/maison-calista-logo.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <link rel="icon" href="/assets/images/logo/maison-calista-logo.svg" type="image/svg+xml" />
 </head>
 <body class="maison-calista-theme lang-${lang}">
   <main class="mc-404 mc-section mc-wide">

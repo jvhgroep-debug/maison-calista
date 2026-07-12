@@ -1,5 +1,0 @@
-Theme dir exists: yes
-functions.php exists: yes
-PHP 8.2.31
-WP 6.7.5
-PARSE_FAIL /inc/template-tags.php :: Invalid UTF-8 codepoint escape sequence

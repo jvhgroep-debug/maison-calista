@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" role="img" aria-label="Room">
-  <path d="M14 38V22c0-5.5 4.5-10 10-10s10 4.5 10 10v16" stroke="#A67C52" stroke-width="1.75" stroke-linecap="round"/>
-  <path d="M10 38h28" stroke="#6B4F3A" stroke-width="1.75" stroke-linecap="round"/>
-  <rect x="20" y="26" width="8" height="12" rx="1" stroke="#A67C52" stroke-width="1.5"/>
-  <path d="M18 18h12" stroke="#6B4F3A" stroke-width="1.25" stroke-linecap="round" opacity="0.6"/>
-</svg>
