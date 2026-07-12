@@ -1,0 +1,15 @@
+{
+  "name": "maison-calista",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Maison Calista static site (Cloudflare Pages) + WordPress theme source",
+  "scripts": {
+    "build": "node _preview/build-static.js",
+    "preview": "node _preview/server.js",
+    "pages:dev": "npm run build && npx wrangler pages dev site --compatibility-date=2026-07-12",
+    "deploy": "npm run build && npx wrangler pages deploy site --project-name=maison-calista"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

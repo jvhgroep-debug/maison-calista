@@ -1,0 +1,9 @@
+{
+  // Cloudflare Pages — Maison Calista static marketing site
+  // Built from the local preview engine (same look as localhost:3000).
+  // WordPress theme lives in maison-calista-theme/ (for STRATO), not run on Pages.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "maison-calista",
+  "compatibility_date": "2026-07-12",
+  "pages_build_output_dir": "site"
+}

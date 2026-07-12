@@ -1,0 +1,12 @@
+node_modules/
+site/
+.wrangler/
+.dev.vars
+.DS_Store
+Thumbs.db
+*.log
+_preview/playground-output/
+_preview/plugin-zips/
+dist/*.zip
+dist/_verify-*/
+dist/maison-calista-theme/
