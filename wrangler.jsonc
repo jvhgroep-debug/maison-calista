@@ -1,7 +1,10 @@
 {
-  // Cloudflare Pages — Maison Calista static website
-  "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "maison-calista",
-  "compatibility_date": "2026-07-12",
-  "pages_build_output_dir": "dist"
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "maison-calista",
+	"compatibility_date": "2026-07-12",
+	"assets": {
+		"directory": "./dist",
+		"html_handling": "force-trailing-slash",
+		"not_found_handling": "404-page"
+	}
 }

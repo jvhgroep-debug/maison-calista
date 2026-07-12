@@ -17,6 +17,9 @@ const SKIP_ASSET_DIRS = new Set([
   'node_modules',
 ]);
 
+/** Cloudflare Workers Static Assets max file size is 25 MiB. */
+const MAX_ASSET_BYTES = 25 * 1024 * 1024;
+
 function rimraf(dir) {
   if (fs.existsSync(dir)) fs.rmSync(dir, { recursive: true, force: true });
 }
@@ -25,11 +28,15 @@ function ensureDir(dir) {
   fs.mkdirSync(dir, { recursive: true });
 }
 
-function shouldSkip(relPosix) {
+function shouldSkip(relPosix, fileSize = 0) {
   const parts = relPosix.split('/');
   if (parts.some((p) => SKIP_ASSET_DIRS.has(p))) return true;
   if (relPosix.includes('assets/images/photos/gallery')) return true;
   if (relPosix.includes('assets/images/source-whatsapp')) return true;
+  // Brochure PDF exceeds Workers 25 MiB asset limit — keep out of /dist.
+  if (parts.includes('brochure')) return true;
+  if (relPosix.replace(/\\/g, '/').endsWith('maison-calista-brochure.pdf')) return true;
+  if (fileSize > MAX_ASSET_BYTES) return true;
   return false;
 }
 
@@ -40,9 +47,18 @@ function copyTree(src, dest, base = src) {
     const to = path.join(dest, name);
     const rel = path.relative(base, from).replace(/\\/g, '/');
     const st = fs.statSync(from);
-    if (shouldSkip(rel)) continue;
-    if (st.isDirectory()) copyTree(from, to, base);
-    else fs.copyFileSync(from, to);
+    if (st.isDirectory()) {
+      if (shouldSkip(rel)) continue;
+      copyTree(from, to, base);
+    } else {
+      if (shouldSkip(rel, st.size)) {
+        if (st.size > MAX_ASSET_BYTES || rel.includes('brochure')) {
+          console.warn('Skipping oversized/excluded asset:', rel, `(${(st.size / (1024 * 1024)).toFixed(1)} MiB)`);
+        }
+        continue;
+      }
+      fs.copyFileSync(from, to);
+    }
   }
 }
 
@@ -90,6 +106,9 @@ function build() {
     ].join('\n'),
     'utf8'
   );
+
+  // Workers Static Assets ignore file (safety net for maps / junk).
+  fs.writeFileSync(path.join(OUT, '.assetsignore'), ['*.map', ''].join('\n'), 'utf8');
 
   let htmlCount = 0;
   function countHtml(dir) {

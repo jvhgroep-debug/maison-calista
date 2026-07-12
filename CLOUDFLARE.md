@@ -1,23 +1,33 @@
-# Cloudflare Pages — Maison Calista (static site)
+# Cloudflare Workers — Maison Calista (Static Assets)
 
-Production output is the **`dist/`** folder built by `npm run build`.
+This project deploys as a **Worker with Static Assets only** (no Worker script).
 
-## Cloudflare dashboard settings
+## `wrangler.jsonc`
+
+```jsonc
+{
+  "name": "maison-calista",
+  "compatibility_date": "2026-07-12",
+  "assets": {
+    "directory": "./dist",
+    "html_handling": "force-trailing-slash",
+    "not_found_handling": "404-page"
+  }
+}
+```
+
+## Build
+
+```bash
+npm run build   # → ./dist
+```
+
+## Dashboard / CI
 
 | Setting | Value |
 |--------|--------|
-| **Git repository** | `jvhgroep-debug/maison-calista` |
-| **Production branch** | `main` |
-| **Root directory** | *(empty)* |
-| **Framework preset** | None |
-| **Build command** | `npm run build` |
-| **Build output directory** | `dist` |
-| **Node.js version** | `20` (`NODE_VERSION=20`) |
+| Build command | `npm run build` |
+| Deploy / assets directory | `./dist` (via `assets.directory` in wrangler.jsonc) |
+| Node | `20` |
 
-## Local
-
-```bash
-npm run build      # writes /dist
-npm run preview    # http://localhost:3000
-npm run deploy     # wrangler pages deploy dist
-```
+After the config is on `main`, open the failed deployment in Cloudflare and click **Retry deployment**.
