@@ -158,7 +158,7 @@ function maison_calista_theme_footer(): string {
 		<div>
 			<div class="mc-footer__brand">Maison Calista</div>
 			<p>An exclusive boutique residence near Marrakech — warmth, light, humanity and quality of life.</p>
-			<p><a href="mailto:contact@maisoncalista.com">contact@maisoncalista.com</a><br />%1$s</p>
+			<p><a href="mailto:contact@associationcalista.com">contact@associationcalista.com</a><br />%1$s</p>
 		</div>
 		<div>
 			<h3 class="mc-footer__heading">Explore</h3>
@@ -209,7 +209,7 @@ function maison_calista_theme_footer(): string {
 		<div>
 			<div class="mc-footer__brand">Maison Calista</div>
 			<p>Une résidence boutique exclusive près de Marrakech — chaleur, lumière, humanité et qualité de vie.</p>
-			<p><a href="mailto:contact@maisoncalista.com">contact@maisoncalista.com</a><br />%1$s</p>
+			<p><a href="mailto:contact@associationcalista.com">contact@associationcalista.com</a><br />%1$s</p>
 		</div>
 		<div>
 			<h3 class="mc-footer__heading">Explorer</h3>

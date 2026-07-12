@@ -35,7 +35,7 @@
 		</details>
 		<details class="mc-room-spec" style="text-align:left;padding:1.25rem 1.5rem;">
 			<summary style="cursor:pointer;font-weight:600;color:var(--mc-ink);">Comment rejoindre la liste d'attente ?</summary>
-			<p style="margin:0.75rem 0 0;color:var(--mc-stone);">Remplissez le formulaire de contact ou écrivez à <a href="mailto:contact@maisoncalista.com">contact@maisoncalista.com</a>. Nous vous répondrons personnellement et vous guiderons pour les prochaines étapes.</p>
+			<p style="margin:0.75rem 0 0;color:var(--mc-stone);">Remplissez le formulaire de contact ou écrivez à <a href="mailto:contact@associationcalista.com">contact@associationcalista.com</a>. Nous vous répondrons personnellement et vous guiderons pour les prochaines étapes.</p>
 		</details>
 	</div>
 	<!-- /wp:html -->

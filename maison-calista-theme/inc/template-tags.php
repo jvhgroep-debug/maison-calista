@@ -408,7 +408,7 @@ add_shortcode( 'mc_contact_form', 'maison_calista_contact_form_shortcode' );
  * French is the default language.
  */
 function maison_calista_fallback_contact_form(): string {
-	$email = sanitize_email( (string) get_theme_mod( 'maison_calista_contact_email', 'contact@maisoncalista.com' ) );
+	$email = sanitize_email( (string) get_theme_mod( 'maison_calista_contact_email', 'contact@associationcalista.com' ) );
 	$en    = function_exists( 'maison_calista_is_english' ) && maison_calista_is_english();
 
 	$labels = $en ? array(
@@ -536,7 +536,7 @@ function maison_calista_handle_contact_form(): void {
 		exit;
 	}
 
-	$to      = sanitize_email( (string) get_theme_mod( 'maison_calista_contact_email', 'contact@maisoncalista.com' ) );
+	$to      = sanitize_email( (string) get_theme_mod( 'maison_calista_contact_email', 'contact@associationcalista.com' ) );
 	$mail_subject = sprintf( '[Maison Calista] %s', $subject );
 	$body    = "Name: {$name}\nEmail: {$email}\nPhone: {$phone}\nPackage: {$package}\n\n{$message}";
 	$headers = array(

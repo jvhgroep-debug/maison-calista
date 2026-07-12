@@ -3,10 +3,13 @@
  */
 const fs = require('fs');
 const path = require('path');
+const { SITE_URL, pathFor } = require('./sitemap');
 
 const ROOT = path.join(__dirname, '..');
 const THEME = path.join(ROOT, 'maison-calista-theme');
 const CONTENT = path.join(THEME, 'inc', 'content');
+const CONTACT_EMAIL = 'contact@associationcalista.com';
+const OG_IMAGE = `${SITE_URL}/assets/images/photos/maison-calista-restaurant-terrace-pool-dusk.jpg`;
 
 const PAGES = [
   { slug: '', file: 'home.html', title: { fr: 'Accueil', en: 'Home' }, nav: false },
@@ -106,7 +109,7 @@ function expandShortcodes(html, lang, pagePath) {
   <div class="mc-form__row"><label>Email</label><input type="email" required /></div>
   <div class="mc-form__row"><label>${lang === 'en' ? 'Message' : 'Message'}</label><textarea rows="5" required></textarea></div>
   <button type="submit" class="mc-btn">${lang === 'en' ? 'Send message' : 'Envoyer'}</button>
-  <p class="mc-form__note">${lang === 'en' ? 'Form — contact@maisoncalista.com' : 'Formulaire — contact@maisoncalista.com'}</p>
+  <p class="mc-form__note">${lang === 'en' ? `Form — ${CONTACT_EMAIL}` : `Formulaire — ${CONTACT_EMAIL}`}</p>
 </form>`);
 
   return out;
@@ -161,7 +164,7 @@ function buildFooter(lang, pagePath) {
     <div>
       <div class="mc-footer__brand">Maison Calista</div>
       <p>An exclusive boutique residence near Marrakech — warmth, light, humanity and quality of life.</p>
-      <p><a href="mailto:contact@maisoncalista.com">contact@maisoncalista.com</a><br />[mc_location]</p>
+      <p><a href="mailto:${CONTACT_EMAIL}">${CONTACT_EMAIL}</a><br />[mc_location]</p>
     </div>
     <div>
       <h3 class="mc-footer__heading">Explore</h3>
@@ -202,7 +205,7 @@ function buildFooter(lang, pagePath) {
     <div>
       <div class="mc-footer__brand">Maison Calista</div>
       <p>Une résidence boutique exclusive près de Marrakech — chaleur, lumière, humanité et qualité de vie.</p>
-      <p><a href="mailto:contact@maisoncalista.com">contact@maisoncalista.com</a><br />[mc_location]</p>
+      <p><a href="mailto:${CONTACT_EMAIL}">${CONTACT_EMAIL}</a><br />[mc_location]</p>
     </div>
     <div>
       <h3 class="mc-footer__heading">Explorer</h3>
@@ -250,6 +253,27 @@ function buildPage(page, lang, options = {}) {
   body = expandShortcodes(body, lang, pagePath);
 
   const title = `${page.title[lang]} · Maison Calista`;
+  const description = lang === 'en'
+    ? 'Maison Calista — exclusive boutique residence near Marrakech, Morocco.'
+    : 'Maison Calista — résidence boutique exclusive près de Marrakech.';
+  const canonical = `${SITE_URL}${pagePath}`;
+  const frUrl = `${SITE_URL}${pathFor('fr', page.slug || '')}`;
+  const enUrl = `${SITE_URL}${pathFor('en', page.slug || '')}`;
+  const locale = lang === 'en' ? 'en_US' : 'fr_FR';
+  const jsonLd = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': ['Organization', 'LodgingBusiness'],
+    name: 'Maison Calista',
+    url: SITE_URL + '/',
+    email: CONTACT_EMAIL,
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Marrakech',
+      addressCountry: 'MA',
+    },
+    logo: `${SITE_URL}/assets/images/logo/maison-calista-logo.svg`,
+    image: OG_IMAGE,
+  });
   const header = buildHeader(lang, page.slug, pagePath);
   const footer = buildFooter(lang, pagePath);
   const badge = production
@@ -262,7 +286,24 @@ function buildPage(page, lang, options = {}) {
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>${title}</title>
-  <meta name="description" content="Maison Calista — résidence boutique exclusive près de Marrakech." />
+  <meta name="description" content="${description}" />
+  <link rel="canonical" href="${canonical}" />
+  <link rel="alternate" hreflang="fr" href="${frUrl}" />
+  <link rel="alternate" hreflang="en" href="${enUrl}" />
+  <link rel="alternate" hreflang="x-default" href="${frUrl}" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="${locale}" />
+  <meta property="og:site_name" content="Maison Calista" />
+  <meta property="og:title" content="${title}" />
+  <meta property="og:description" content="${description}" />
+  <meta property="og:url" content="${canonical}" />
+  <meta property="og:image" content="${OG_IMAGE}" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="${title}" />
+  <meta name="twitter:description" content="${description}" />
+  <meta name="twitter:url" content="${canonical}" />
+  <meta name="twitter:image" content="${OG_IMAGE}" />
+  <script type="application/ld+json">${jsonLd}</script>
   <link rel="preload" href="/assets/fonts/source-sans-3-latin.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="/assets/fonts/cormorant-garamond-latin.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="/assets/css/main.css" />

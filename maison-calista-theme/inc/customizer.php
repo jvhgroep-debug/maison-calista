@@ -30,7 +30,7 @@ function maison_calista_customize_register( WP_Customize_Manager $wp_customize )
 	$fields = array(
 		'maison_calista_contact_email'             => array(
 			'label'       => __( 'Contact email', 'maison-calista' ),
-			'default'     => 'contact@maisoncalista.com',
+			'default'     => 'contact@associationcalista.com',
 			'type'        => 'email',
 			'description' => '',
 		),
@@ -255,7 +255,7 @@ function maison_calista_seed_placeholder_defaults(): void {
 		'maison_calista_price_wellbeing'           => '1899',
 		'maison_calista_price_comfort'             => '2599',
 		'maison_calista_price_signature'           => '3799',
-		'maison_calista_contact_email'             => 'contact@maisoncalista.com',
+		'maison_calista_contact_email'             => 'contact@associationcalista.com',
 		'maison_calista_location_label'            => "Près de Marrakech, Maroc",
 		'maison_calista_location_label_en'         => 'Near Marrakech, Morocco',
 		'maison_calista_legal_notice_enabled'      => true,

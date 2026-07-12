@@ -21,7 +21,7 @@ function maison_calista_schema_jsonld(): void {
 	}
 
 	$is_en   = function_exists( 'maison_calista_is_english' ) && maison_calista_is_english();
-	$email    = sanitize_email( (string) get_theme_mod( 'maison_calista_contact_email', 'contact@maisoncalista.com' ) );
+	$email    = sanitize_email( (string) get_theme_mod( 'maison_calista_contact_email', 'contact@associationcalista.com' ) );
 	$maps_url = esc_url( (string) get_theme_mod( 'maison_calista_maps_url', 'https://maps.google.com/?q=Marrakech+Morocco' ) );
 
 	$organization = array(

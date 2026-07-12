@@ -19,7 +19,7 @@
 			<a class="mc-btn-outline" href="%%HOME_URL%%gallery/" style="border-color:var(--mc-gold);color:var(--mc-ink)!important;">Voir la galerie</a>
 		</p>
 		<p style="margin-top:1.5rem;font-size:0.9rem;color:var(--mc-stone);">
-			<a href="mailto:contact@maisoncalista.com">contact@maisoncalista.com</a> · Marrakech, Maroc
+			<a href="mailto:contact@associationcalista.com">contact@associationcalista.com</a> · Marrakech, Maroc
 		</p>
 	</div>
 	<!-- /wp:html -->

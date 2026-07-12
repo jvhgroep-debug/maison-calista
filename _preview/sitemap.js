@@ -2,7 +2,7 @@
  * Production sitemap.xml + robots.txt (sitemap.org + Google hreflang).
  * Emits UTF-8 XML without BOM for correct browser XML rendering.
  */
-const SITE_URL = (process.env.SITE_URL || 'https://www.maisoncalista.com').replace(/\/+$/, '');
+const SITE_URL = (process.env.SITE_URL || 'https://www.associationcalista.com').replace(/\/+$/, '');
 
 /** @param {string} slug */
 function pathFor(lang, slug) {
@@ -148,6 +148,19 @@ function assertValidSitemapXml(xml) {
   // Reject HTML/plain wrappers
   if (/<!DOCTYPE html|<html[\s>]/i.test(xml)) {
     throw new Error('sitemap.xml looks like HTML, not XML');
+  }
+  const legacyHost = ['maison', 'calista', '.com'].join('');
+  if (xml.toLowerCase().includes(legacyHost)) {
+    throw new Error('sitemap.xml still contains the previous production domain');
+  }
+  if (!xml.includes(SITE_URL)) {
+    throw new Error(`sitemap.xml missing SITE_URL ${SITE_URL}`);
+  }
+  const badLoc = xml.match(/<loc>([^<]+)<\/loc>/g) || [];
+  for (const loc of badLoc) {
+    if (!loc.includes(SITE_URL)) {
+      throw new Error(`sitemap.xml loc uses unexpected host: ${loc}`);
+    }
   }
 }
 

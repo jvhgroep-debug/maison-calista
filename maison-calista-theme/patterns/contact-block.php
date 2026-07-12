@@ -25,7 +25,7 @@
 		<div>
 			<h3>Maison Calista</h3>
 			<p>
-				<a href="mailto:contact@maisoncalista.com">contact@maisoncalista.com</a><br />
+				<a href="mailto:contact@associationcalista.com">contact@associationcalista.com</a><br />
 				Marrakech, Maroc
 			</p>
 			<p><a class="mc-btn-cta" href="%%HOME_URL%%contact/">Liste d'attente</a></p>

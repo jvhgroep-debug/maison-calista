@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Maison Calista 1.0.0\n"
-"Report-Msgid-Bugs-To: https://www.maisoncalista.com\n"
+"Report-Msgid-Bugs-To: https://www.associationcalista.com\n"
 "POT-Creation-Date: 2026-07-11 18:00+0000\n"
 "PO-Revision-Date: 2026-07-11 18:00+0400\n"
 "Last-Translator: Maison Calista\n"

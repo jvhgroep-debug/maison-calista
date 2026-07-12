@@ -40,5 +40,5 @@
 **Weergave → Thema’s** → *Re-sync pages from theme files* (overschrijft pagina-inhoud vanuit thema-bestanden).
 
 ## Support-contact site
-- Website: https://www.maisoncalista.com  
-- E-mail: contact@maisoncalista.com
+- Website: https://www.associationcalista.com  
+- E-mail: contact@associationcalista.com
