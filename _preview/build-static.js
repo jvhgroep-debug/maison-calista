@@ -7,6 +7,7 @@
 const fs = require('fs');
 const path = require('path');
 const { ROOT, THEME, PAGES, buildPage, build404 } = require('./site-engine');
+const { SITE_URL, buildSitemapXml, buildRobotsTxt } = require('./sitemap');
 
 const OUT = path.join(ROOT, 'dist');
 
@@ -103,9 +104,22 @@ function build() {
       '/assets/*',
       '  Cache-Control: public, max-age=31536000, immutable',
       '',
+      '/sitemap.xml',
+      '  Content-Type: application/xml; charset=utf-8',
+      '  Cache-Control: public, max-age=3600',
+      '',
+      '/robots.txt',
+      '  Content-Type: text/plain; charset=utf-8',
+      '  Cache-Control: public, max-age=3600',
+      '',
     ].join('\n'),
     'utf8'
   );
+
+  // SEO: sitemap + robots (all FR/EN URLs + hreflang)
+  const lastmod = new Date().toISOString().slice(0, 10);
+  fs.writeFileSync(path.join(OUT, 'sitemap.xml'), buildSitemapXml(PAGES, lastmod), 'utf8');
+  fs.writeFileSync(path.join(OUT, 'robots.txt'), buildRobotsTxt(), 'utf8');
 
   // Workers Static Assets ignore file (safety net for maps / junk).
   fs.writeFileSync(path.join(OUT, '.assetsignore'), ['*.map', ''].join('\n'), 'utf8');
@@ -128,6 +142,8 @@ function build() {
     'assets/js/main.js',
     'assets/js/navigation.js',
     'assets/images/logo/maison-calista-logo.svg',
+    'sitemap.xml',
+    'robots.txt',
   ];
   for (const rel of required) {
     if (!fs.existsSync(path.join(OUT, rel))) {
@@ -138,6 +154,7 @@ function build() {
 
   console.log('Output:', OUT);
   console.log('HTML files:', htmlCount);
+  console.log('Sitemap:', SITE_URL + '/sitemap.xml');
   console.log('DONE');
 }
 
