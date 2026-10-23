@@ -90,6 +90,8 @@ function build() {
     path.join(THEME, 'assets')
   );
 
+  fs.copyFileSync(path.join(THEME, 'assets/images/logo/maison-calista-favicon.ico'), path.join(OUT, 'favicon.ico'));
+
   fs.writeFileSync(
     path.join(OUT, '_redirects'),
     ['/en  /en/  301', ''].join('\n'),

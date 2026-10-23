@@ -332,7 +332,10 @@ function buildPage(page, lang, options = {}) {
   <link rel="preload" href="/assets/fonts/source-sans-3-latin.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="/assets/fonts/cormorant-garamond-latin.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="/assets/css/main.css" />
-  <link rel="icon" href="/assets/images/logo/maison-calista-logo.svg" type="image/svg+xml" />
+  <link rel="icon" href="/assets/images/logo/maison-calista-favicon-96.png" type="image/png" sizes="96x96" />
+  <link rel="icon" href="/assets/images/logo/maison-calista-favicon.svg" type="image/svg+xml" sizes="any" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" href="/assets/images/logo/maison-calista-apple-touch-icon.png" sizes="180x180" />
   <style>
     :root {
       --wp--preset--color--cream: #F7F2EA;
@@ -426,7 +429,10 @@ function build404(lang = 'fr') {
   ${googleAnalyticsHeadSnippet()}
   <title>${lang === 'en' ? 'Page not found' : 'Page introuvable'} · Maison Calista</title>
   <link rel="stylesheet" href="/assets/css/main.css" />
-  <link rel="icon" href="/assets/images/logo/maison-calista-logo.svg" type="image/svg+xml" />
+  <link rel="icon" href="/assets/images/logo/maison-calista-favicon-96.png" type="image/png" sizes="96x96" />
+  <link rel="icon" href="/assets/images/logo/maison-calista-favicon.svg" type="image/svg+xml" sizes="any" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" href="/assets/images/logo/maison-calista-apple-touch-icon.png" sizes="180x180" />
 </head>
 <body class="maison-calista-theme lang-${lang}">
   <main class="mc-404 mc-section mc-wide">
