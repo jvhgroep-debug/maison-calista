@@ -76,7 +76,9 @@ function build() {
 
   for (const page of PAGES) {
     writePage(page.slug || '.', buildPage(page, 'fr', { production: true }));
-    writePage(path.join('en', page.slug || '.'), buildPage(page, 'en', { production: true }));
+    if (!page.languages || page.languages.includes('en')) {
+      writePage(path.join('en', page.slug || '.'), buildPage(page, 'en', { production: true }));
+    }
   }
 
   fs.writeFileSync(path.join(OUT, '404.html'), build404('fr'), 'utf8');

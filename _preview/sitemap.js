@@ -79,6 +79,10 @@ function buildSitemapXml(pages, lastmod = new Date().toISOString().slice(0, 10))
     const priority = priorityFor(slug);
     const changefreq = changefreqFor(slug);
 
+    if (page.languages?.length === 1 && page.languages[0] === 'fr') {
+      entries.push(urlEntry(frLoc, frLoc, enLoc, lastmod, changefreq, priority).split('\n').filter((line) => !line.includes('hreflang="en"')).join('\n'));
+      continue;
+    }
     entries.push(urlEntry(frLoc, frLoc, enLoc, lastmod, changefreq, priority));
     entries.push(urlEntry(enLoc, frLoc, enLoc, lastmod, changefreq, priority));
   }

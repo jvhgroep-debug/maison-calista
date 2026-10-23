@@ -41,6 +41,7 @@ const PAGES = [
   { slug: 'gallery', file: 'gallery.html', title: { fr: 'Galerie', en: 'Gallery' }, nav: true },
   { slug: 'contact', file: 'contact.html', title: { fr: 'Contact', en: 'Contact' }, nav: true },
   { slug: 'privacy-policy', file: 'privacy.html', title: { fr: 'Confidentialité', en: 'Privacy Policy' }, nav: false },
+  { slug: 'blog/maison-calista-maroc-marrakech', file: 'blog-maison-calista-maroc.html', title: { fr: 'Maison Calista au Maroc : vivre près de Marrakech' }, description: { fr: 'Découvrez Maison Calista près de Marrakech : résidence de douze chambres, accompagnement quotidien, activités et lien avec les familles.' }, languages: ['fr'], article: true, nav: false },
   { slug: 'cookie-policy', file: 'cookies.html', title: { fr: 'Cookies', en: 'Cookie Policy' }, nav: false },
 ];
 
@@ -70,6 +71,7 @@ function expandShortcodes(html, lang, pagePath) {
   const year = String(new Date().getFullYear());
   const loc = lang === 'en' ? 'Near Marrakech, Morocco' : 'Près de Marrakech, Maroc';
   const selfPath = pagePath || home;
+  const isFrenchOnly = PAGES.some((p) => p.languages?.length === 1 && p.languages[0] === 'fr' && selfPath === pathFor('fr', p.slug));
   const otherPath = lang === 'en'
     ? selfPath.replace(/^\/en/, '') || '/'
     : '/en' + (selfPath === '/' ? '/' : selfPath);
@@ -86,7 +88,7 @@ function expandShortcodes(html, lang, pagePath) {
   out = out.replace(/\[mc_language_switcher\]/g, `
 <nav class="mc-lang" aria-label="Langue">
   <a class="mc-lang__link${lang === 'fr' ? ' is-active' : ''}" href="${lang === 'fr' ? selfPath : otherPath}" hreflang="fr" lang="fr">🇫🇷 <span>Français</span></a>
-  <a class="mc-lang__link${lang === 'en' ? ' is-active' : ''}" href="${lang === 'en' ? selfPath : otherPath}" hreflang="en" lang="en">🇬🇧 <span>English</span></a>
+  <a class="mc-lang__link${lang === 'en' ? ' is-active' : ''}" href="${isFrenchOnly ? '/en/' : (lang === 'en' ? selfPath : otherPath)}" hreflang="en" lang="en">🇬🇧 <span>English</span></a>
 </nav>`);
 
   out = out.replace(/\[mc_location\]/g, loc);
@@ -192,6 +194,7 @@ function buildFooter(lang, pagePath) {
         <li><a href="${home}care-support/">Care &amp; support</a></li>
         <li><a href="${home}activities/">Activities</a></li>
         <li><a href="${home}restaurant/">Restaurant</a></li>
+        <li><a href="/blog/maison-calista-maroc-marrakech/">Journal : notre vie au Maroc</a></li>
       </ul>
     </div>
     <div>
@@ -233,6 +236,7 @@ function buildFooter(lang, pagePath) {
         <li><a href="${home}care-support/">Accompagnement</a></li>
         <li><a href="${home}activities/">Activités</a></li>
         <li><a href="${home}restaurant/">Restaurant</a></li>
+        <li><a href="/blog/maison-calista-maroc-marrakech/">Journal : notre vie au Maroc</a></li>
       </ul>
     </div>
     <div>
@@ -271,13 +275,14 @@ function buildPage(page, lang, options = {}) {
   body = expandShortcodes(body, lang, pagePath);
 
   const title = `${page.title[lang]} · Maison Calista`;
-  const description = lang === 'en'
+  const description = page.description?.[lang] || (lang === 'en'
     ? 'Maison Calista — exclusive boutique residence near Marrakech, Morocco.'
-    : 'Maison Calista — résidence boutique exclusive près de Marrakech.';
+    : 'Maison Calista — résidence boutique exclusive près de Marrakech.');
   const canonical = `${SITE_URL}${pagePath}`;
   const frUrl = `${SITE_URL}${pathFor('fr', page.slug || '')}`;
   const enUrl = `${SITE_URL}${pathFor('en', page.slug || '')}`;
   const locale = lang === 'en' ? 'en_US' : 'fr_FR';
+  const articleJsonLd = page.article ? `<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@type': 'BlogPosting', headline: page.title[lang], description, inLanguage: 'fr', datePublished: '2026-10-23', dateModified: '2026-10-23', mainEntityOfPage: canonical, image: OG_IMAGE, author: { '@type': 'Organization', name: 'Maison Calista', url: SITE_URL + '/' } })}</script>` : '';
   const jsonLd = JSON.stringify({
     '@context': 'https://schema.org',
     '@type': ['Organization', 'LodgingBusiness'],
@@ -308,9 +313,9 @@ function buildPage(page, lang, options = {}) {
   <meta name="description" content="${description}" />
   <link rel="canonical" href="${canonical}" />
   <link rel="alternate" hreflang="fr" href="${frUrl}" />
-  <link rel="alternate" hreflang="en" href="${enUrl}" />
+  ${!page.languages || page.languages.includes('en') ? `<link rel="alternate" hreflang="en" href="${enUrl}" />` : ''}
   <link rel="alternate" hreflang="x-default" href="${frUrl}" />
-  <meta property="og:type" content="website" />
+  <meta property="og:type" content="${page.article ? 'article' : 'website'}" />
   <meta property="og:locale" content="${locale}" />
   <meta property="og:site_name" content="Maison Calista" />
   <meta property="og:title" content="${title}" />
@@ -323,6 +328,7 @@ function buildPage(page, lang, options = {}) {
   <meta name="twitter:url" content="${canonical}" />
   <meta name="twitter:image" content="${OG_IMAGE}" />
   <script type="application/ld+json">${jsonLd}</script>
+  ${articleJsonLd}
   <link rel="preload" href="/assets/fonts/source-sans-3-latin.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="/assets/fonts/cormorant-garamond-latin.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="/assets/css/main.css" />
@@ -407,7 +413,7 @@ function resolvePage(pathname) {
 
   const slug = p.replace(/^\//, '').replace(/\/$/, '');
   const page = PAGES.find((x) => x.slug === slug);
-  return page ? { page, lang } : null;
+  return page && (!page.languages || page.languages.includes(lang)) ? { page, lang } : null;
 }
 
 function build404(lang = 'fr') {
