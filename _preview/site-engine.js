@@ -8,6 +8,7 @@ const { SITE_URL, pathFor } = require('./sitemap');
 const ROOT = path.join(__dirname, '..');
 const THEME = path.join(ROOT, 'maison-calista-theme');
 const CONTENT = path.join(THEME, 'inc', 'content');
+const { PHONE, DISPLAY_PHONE, whatsappUrl, renderWhatsApp } = require('./whatsapp');
 const CONTACT_EMAIL = 'contact@associationcalista.com';
 const OG_IMAGE = `${SITE_URL}/assets/images/photos/maison-calista-restaurant-terrace-pool-dusk.jpg`;
 /** Google Analytics 4 measurement ID (single source — injected once per page). */
@@ -99,8 +100,9 @@ function expandShortcodes(html, lang, pagePath) {
       : `<p class="mc-last-updated">Dernière mise à jour : ${new Date().toLocaleDateString('fr-FR')}</p>`);
 
   out = out.replace(/\[mc_whatsapp[^\]]*\]/g,
-    `<span class="mc-tbc" title="Customizer placeholder"><span class="mc-tbc__value">To be confirmed</span></span>`);
+    `<a href="${whatsappUrl(lang)}" target="_blank" rel="noopener noreferrer">${DISPLAY_PHONE}</a>`);
 
+  out = out.replace(/\[mc_phone\]/g, `<a href="tel:${PHONE}">${DISPLAY_PHONE}</a>`);
   out = out.replace(/\[mc_social_links\]/g, '');
 
   out = out.replace(/\[mc_maps\]/g, `
@@ -184,7 +186,7 @@ function buildFooter(lang, pagePath) {
     <div>
       <div class="mc-footer__brand">Maison Calista</div>
       <p>An exclusive boutique residence near Marrakech — warmth, light, humanity and quality of life.</p>
-      <p><a href="mailto:${CONTACT_EMAIL}">${CONTACT_EMAIL}</a><br />[mc_location]</p>
+      <p><a href="mailto:${CONTACT_EMAIL}">${CONTACT_EMAIL}</a><br /><a href="tel:${PHONE}">${DISPLAY_PHONE}</a><br /><a href="${whatsappUrl(lang)}" target="_blank" rel="noopener noreferrer">WhatsApp</a><br />[mc_location]</p>
     </div>
     <div>
       <h3 class="mc-footer__heading">Explore</h3>
@@ -226,7 +228,7 @@ function buildFooter(lang, pagePath) {
     <div>
       <div class="mc-footer__brand">Maison Calista</div>
       <p>Une résidence boutique exclusive près de Marrakech — chaleur, lumière, humanité et qualité de vie.</p>
-      <p><a href="mailto:${CONTACT_EMAIL}">${CONTACT_EMAIL}</a><br />[mc_location]</p>
+      <p><a href="mailto:${CONTACT_EMAIL}">${CONTACT_EMAIL}</a><br /><a href="tel:${PHONE}">${DISPLAY_PHONE}</a><br /><a href="${whatsappUrl(lang)}" target="_blank" rel="noopener noreferrer">WhatsApp</a><br />[mc_location]</p>
     </div>
     <div>
       <h3 class="mc-footer__heading">Explorer</h3>
@@ -289,6 +291,7 @@ function buildPage(page, lang, options = {}) {
     name: 'Maison Calista',
     url: SITE_URL + '/',
     email: CONTACT_EMAIL,
+    telephone: PHONE,
     address: {
       '@type': 'PostalAddress',
       addressLocality: 'Marrakech',
@@ -332,6 +335,7 @@ function buildPage(page, lang, options = {}) {
   <link rel="preload" href="/assets/fonts/source-sans-3-latin.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="/assets/fonts/cormorant-garamond-latin.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="/assets/css/main.css" />
+  <link rel="stylesheet" href="/assets/css/whatsapp.css" />
   <link rel="icon" href="/assets/images/logo/maison-calista-favicon-96.png" type="image/png" sizes="96x96" />
   <link rel="icon" href="/assets/images/logo/maison-calista-favicon.svg" type="image/svg+xml" sizes="any" />
   <link rel="shortcut icon" href="/favicon.ico" />
@@ -389,9 +393,11 @@ function buildPage(page, lang, options = {}) {
     ${body}
   </main>
   ${footer}
+  ${renderWhatsApp(lang)}
   ${badge}
   <script src="/assets/js/navigation.js" defer></script>
   <script src="/assets/js/main.js" defer></script>
+  <script src="/assets/js/whatsapp.js" defer></script>
   ${page.slug === 'gallery' ? '<script src="/assets/js/gallery.js" defer></script>' : ''}
   <script>
     window.maisonCalista = window.maisonCalista || { i18n: {
@@ -429,6 +435,7 @@ function build404(lang = 'fr') {
   ${googleAnalyticsHeadSnippet()}
   <title>${lang === 'en' ? 'Page not found' : 'Page introuvable'} · Maison Calista</title>
   <link rel="stylesheet" href="/assets/css/main.css" />
+  <link rel="stylesheet" href="/assets/css/whatsapp.css" />
   <link rel="icon" href="/assets/images/logo/maison-calista-favicon-96.png" type="image/png" sizes="96x96" />
   <link rel="icon" href="/assets/images/logo/maison-calista-favicon.svg" type="image/svg+xml" sizes="any" />
   <link rel="shortcut icon" href="/favicon.ico" />
