@@ -222,6 +222,7 @@ function buildFooter(lang, pagePath) {
     <p>© [mc_year] Maison Calista. All rights reserved.</p>
     [mc_last_updated]
   </div>
+<p style="margin:1rem auto 0;text-align:center;padding:0 1rem 1rem;font-size:0.875rem"><a href="https://www.starlocaldeals.com/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;text-underline-offset:3px">Partner by StarLocalDeals.com</a></p>
 </footer>` : `
 <footer class="wp-block-group mc-footer">
   <div class="mc-footer__grid">
@@ -264,6 +265,7 @@ function buildFooter(lang, pagePath) {
     <p>© [mc_year] Maison Calista. Tous droits réservés.</p>
     [mc_last_updated]
   </div>
+<p style="margin:1rem auto 0;text-align:center;padding:0 1rem 1rem;font-size:0.875rem"><a href="https://www.starlocaldeals.com/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;text-underline-offset:3px">Partner by StarLocalDeals.com</a></p>
 </footer>`;
   return expandShortcodes(html, lang, pagePath);
 }
